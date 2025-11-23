@@ -17,7 +17,8 @@ fun Double.format(digits: Int): String {
 
 fun main() {
     val scope = MainScope()
-    val serviceKey = "f3e027a9e45f36b26cbb7680cea525e6da12c046339f67677115fc68da0a966c"  // 여기에 발급받은 API 키 입력
+    val serviceKey =
+        "f3e027a9e45f36b26cbb7680cea525e6da12c046339f67677115fc68da0a966c"  // 여기에 발급받은 API 키 입력
     val weatherApi = WeatherApi(serviceKey)
     val recommender = ClothingRecommender()
 
