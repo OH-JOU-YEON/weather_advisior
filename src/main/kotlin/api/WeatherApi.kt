@@ -35,7 +35,7 @@ class WeatherApi(private val serviceKey: String) {
     }
 
     private fun buildApiUrl(coordinate: GridCoordinate, baseDate: String, baseTime: String): String {
-        return "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst" +
+        val originalUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst" +
                 "?serviceKey=$serviceKey" +
                 "&numOfRows=100" +
                 "&pageNo=1" +
@@ -44,6 +44,10 @@ class WeatherApi(private val serviceKey: String) {
                 "&base_time=$baseTime" +
                 "&nx=${coordinate.nx}" +
                 "&ny=${coordinate.ny}"
+
+        // CORS 우회용 프록시 사용
+        val encodedUrl = js("encodeURIComponent")(originalUrl) as String
+        return "https://corsproxy.io/?$encodedUrl"
     }
 
     private fun parseWeatherData(location: String, jsonData: Json): WeatherData {
