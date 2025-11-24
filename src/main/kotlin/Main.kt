@@ -8,12 +8,8 @@ import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLSelectElement
 import org.w3c.dom.events.Event
 import strategy.ClothingRecommender
-import kotlin.math.round
+import utils.format
 
-fun Double.format(digits: Int): String {
-    val multiplier = 10.0
-    return (round(this * multiplier) / multiplier).toString()
-}
 
 fun main() {
     val scope = MainScope()
