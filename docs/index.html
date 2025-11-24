@@ -10,7 +10,7 @@
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+           background: #e3f2fd;
             min-height: 100vh;
         }
         .container {
@@ -60,21 +60,49 @@
             background: white;
             border-left: 4px solid #667eea;
         }
+
+        select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: white;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #667eea;
+}
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🌡️ 기온별 옷차림 추천</h1>
-    <input id="location" placeholder="지역을 입력하세요 (예: 서울)" type="text">
+    <select id="location">
+        <option value="">지역을 선택하세요</option>
+        <option value="서울">서울</option>
+        <option value="인천">인천</option>
+        <option value="수원">수원</option>
+        <option value="부산">부산</option>
+        <option value="대구">대구</option>
+        <option value="대전">대전</option>
+        <option value="광주">광주</option>
+        <option value="울산">울산</option>
+        <option value="제주">제주</option>
+        <option value="강릉">강릉</option>
+        <option value="춘천">춘천</option>
+        <option value="청주">청주</option>
+        <option value="전주">전주</option>
+        <option value="포항">포항</option>
+        <option value="창원">창원</option>
+    </select>
     <button id="searchBtn">날씨 조회</button>
     <div id="result"></div>
 </div>
-<script src="kotlin-kotlin-stdlib.js"></script>
-<script src="88b0986a7186d029-atomicfu-js-ir.js"></script>
-<script src="kotlin-kotlinx-atomicfu-runtime-js-ir.js"></script>
-<script src="kotlinx_coroutines-kotlinx-coroutines-core-js-ir.js"></script>
-<script src="kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.js"></script>
-<script src="kotlinx-html.js"></script>
 <script src="weather-clothing-advisor.js"></script>
 </body>
 </html>
