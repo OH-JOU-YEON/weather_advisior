@@ -16,45 +16,48 @@
   'use strict';
   //region block: imports
   var imul = Math.imul;
-  var protoOf = kotlin_kotlin.$_$.s3;
-  var objectMeta = kotlin_kotlin.$_$.r3;
-  var setMetadataFor = kotlin_kotlin.$_$.t3;
+  var protoOf = kotlin_kotlin.$_$.u3;
+  var objectMeta = kotlin_kotlin.$_$.t3;
+  var setMetadataFor = kotlin_kotlin.$_$.v3;
   var MainScope = kotlin_org_jetbrains_kotlinx_kotlinx_coroutines_core.$_$.c;
-  var CoroutineImpl = kotlin_kotlin.$_$.v2;
+  var CoroutineImpl = kotlin_kotlin.$_$.x2;
   var Unit_getInstance = kotlin_kotlin.$_$.n1;
-  var THROW_CCE = kotlin_kotlin.$_$.r4;
+  var THROW_CCE = kotlin_kotlin.$_$.t4;
   var CoroutineScope = kotlin_org_jetbrains_kotlinx_kotlinx_coroutines_core.$_$.b;
-  var isInterface = kotlin_kotlin.$_$.n3;
-  var get_COROUTINE_SUSPENDED = kotlin_kotlin.$_$.f2;
-  var trimIndent = kotlin_kotlin.$_$.g4;
-  var Exception = kotlin_kotlin.$_$.m4;
-  var classMeta = kotlin_kotlin.$_$.c3;
+  var isInterface = kotlin_kotlin.$_$.p3;
+  var get_COROUTINE_SUSPENDED = kotlin_kotlin.$_$.h2;
+  var trimIndent = kotlin_kotlin.$_$.i4;
+  var Exception = kotlin_kotlin.$_$.o4;
+  var classMeta = kotlin_kotlin.$_$.e3;
   var VOID = kotlin_kotlin.$_$.b;
-  var isCharSequence = kotlin_kotlin.$_$.m3;
-  var trim = kotlin_kotlin.$_$.h4;
-  var toString = kotlin_kotlin.$_$.v3;
-  var charSequenceLength = kotlin_kotlin.$_$.b3;
+  var isCharSequence = kotlin_kotlin.$_$.o3;
+  var trim = kotlin_kotlin.$_$.j4;
+  var toString = kotlin_kotlin.$_$.x3;
+  var charSequenceLength = kotlin_kotlin.$_$.d3;
   var launch = kotlin_org_jetbrains_kotlinx_kotlinx_coroutines_core.$_$.d;
-  var SuspendFunction1 = kotlin_kotlin.$_$.w2;
-  var to = kotlin_kotlin.$_$.b5;
+  var SuspendFunction1 = kotlin_kotlin.$_$.y2;
+  var to = kotlin_kotlin.$_$.d5;
   var mapOf = kotlin_kotlin.$_$.z1;
-  var toList = kotlin_kotlin.$_$.c2;
+  var toList = kotlin_kotlin.$_$.e2;
   var _Char___init__impl__6a9atx = kotlin_kotlin.$_$.b1;
-  var padStart = kotlin_kotlin.$_$.c4;
+  var padStart = kotlin_kotlin.$_$.e4;
   var StringBuilder_init_$Create$ = kotlin_kotlin.$_$.m;
   var IllegalArgumentException_init_$Create$ = kotlin_kotlin.$_$.q;
   var await_0 = kotlin_org_jetbrains_kotlinx_kotlinx_coroutines_core.$_$.a;
   var Exception_init_$Create$ = kotlin_kotlin.$_$.p;
-  var isArray = kotlin_kotlin.$_$.l3;
-  var toDoubleOrNull = kotlin_kotlin.$_$.e4;
-  var getStringHashCode = kotlin_kotlin.$_$.i3;
-  var getNumberHashCode = kotlin_kotlin.$_$.h3;
-  var equals = kotlin_kotlin.$_$.f3;
+  var isArray = kotlin_kotlin.$_$.n3;
+  var ArrayList_init_$Create$ = kotlin_kotlin.$_$.e;
+  var toDoubleOrNull = kotlin_kotlin.$_$.g4;
+  var maxOrNull = kotlin_kotlin.$_$.a2;
+  var minOrNull = kotlin_kotlin.$_$.b2;
+  var getStringHashCode = kotlin_kotlin.$_$.k3;
+  var getNumberHashCode = kotlin_kotlin.$_$.j3;
+  var equals = kotlin_kotlin.$_$.h3;
   var listOf = kotlin_kotlin.$_$.x1;
-  var interfaceMeta = kotlin_kotlin.$_$.k3;
-  var round = kotlin_kotlin.$_$.w3;
+  var interfaceMeta = kotlin_kotlin.$_$.m3;
+  var round = kotlin_kotlin.$_$.y3;
   var toString_0 = kotlin_kotlin.$_$.e1;
-  var repeat = kotlin_kotlin.$_$.d4;
+  var repeat = kotlin_kotlin.$_$.f4;
   //endregion
   //region block: pre-declaration
   setMetadataFor(ApiConstants, 'ApiConstants', objectMeta);
@@ -486,9 +489,10 @@
     var response = jsonData.response;
     var tmp = response.body.items.item;
     var items = (!(tmp == null) ? isArray(tmp) : false) ? tmp : THROW_CCE();
-    var maxTemp = 15.0;
-    var minTemp = 5.0;
-    var currentTemp = 10.0;
+    var maxTemp = null;
+    var minTemp = null;
+    // Inline function 'kotlin.collections.mutableListOf' call
+    var temperatures = ArrayList_init_$Create$();
     var inductionVariable = 0;
     var last = items.length;
     $l$loop: while (inductionVariable < last) {
@@ -514,16 +518,18 @@
         case 'TMN':
           minTemp = fcstValue;
           break;
-        case 'T1H':
-          currentTemp = fcstValue;
+        case 'TMP':
+          temperatures.add_utx5q5_k$(fcstValue);
           break;
       }
     }
-    if (maxTemp === 15.0 ? minTemp === 5.0 : false) {
-      maxTemp = currentTemp + 3;
-      minTemp = currentTemp - 3;
-    }
-    return new WeatherData(location, maxTemp, minTemp);
+    var tmp3_elvis_lhs = maxTemp;
+    var tmp4_elvis_lhs = tmp3_elvis_lhs == null ? maxOrNull(temperatures) : tmp3_elvis_lhs;
+    var finalMaxTemp = tmp4_elvis_lhs == null ? 15.0 : tmp4_elvis_lhs;
+    var tmp5_elvis_lhs = minTemp;
+    var tmp6_elvis_lhs = tmp5_elvis_lhs == null ? minOrNull(temperatures) : tmp5_elvis_lhs;
+    var finalMinTemp = tmp6_elvis_lhs == null ? 5.0 : tmp6_elvis_lhs;
+    return new WeatherData(location, finalMaxTemp, finalMinTemp);
   };
   var WeatherDataParser_instance;
   function WeatherDataParser_getInstance() {
