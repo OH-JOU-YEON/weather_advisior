@@ -25,4 +25,5 @@ kotlin {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.9.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    testImplementation(kotlin("test"))
 }
