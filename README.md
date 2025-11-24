@@ -160,6 +160,35 @@ weather-clothing-advisor/
 
 ## 🚀 실행 방법
 
+## ⚠️ 사용 시 주의사항
+
+### API 트래픽 제한
+- 기상청 공공데이터 API는 **일일 트래픽 제한**이 있습니다
+- 무료 API 키 기준: 하루 1,000건 호출 제한
+- 제한 초과 시 당일 서비스 이용 불가
+
+### 데모 사이트 이용
+- [배포 사이트](https://oh-jou-yeon.github.io/weather_advisior/)는 공개된 API 키 사용
+- 많은 사용자가 접속할 경우 트래픽 제한에 도달할 수 있습니다
+- API 제한 도달 시: "오류가 발생했습니다" 메시지 표시
+
+### 로컬 실행 권장
+개인 API 키로 사용하고 싶다면:
+
+1. [공공데이터포털](https://www.data.go.kr/)에서 API 키 발급
+2. `Constants.kt`의 `SERVICE_KEY` 변경
+```kotlin
+object ApiConstants {
+    const val SERVICE_KEY = "본인의_API_키"
+    // ...
+}
+```
+3. 로컬 실행: `./gradlew browserDevelopmentRun`
+
+### CORS 프록시 제약
+- CORS 프록시(`corsproxy.io`)는 무료 서비스로 불안정할 수 있습니다
+- 실제 서비스 운영 시 백엔드 서버 구축 권장
+
 ### 개발 서버 실행
 ```bash
 ./gradlew browserDevelopmentRun
