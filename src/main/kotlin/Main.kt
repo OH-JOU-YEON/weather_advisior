@@ -17,57 +17,53 @@ fun Double.format(digits: Int): String {
 
 fun main() {
     val scope = MainScope()
-    val serviceKey =
-        "f3e027a9e45f36b26cbb7680cea525e6da12c046339f67677115fc68da0a966c"  // 여기에 발급받은 API 키 입력
-    val weatherApi = WeatherApi(serviceKey)
+    val weatherApi = WeatherApi(ApiConstants.SERVICE_KEY)
     val recommender = ClothingRecommender()
 
     window.onload = {
         val searchBtn = document.getElementById("searchBtn") as HTMLButtonElement
-        val locationSelect = document.getElementById("location") as HTMLSelectElement  // 변경
+        val locationSelect = document.getElementById("location") as HTMLSelectElement
         val resultDiv = document.getElementById("result") as HTMLDivElement
 
         searchBtn.addEventListener("click", { _: Event ->
-            val location = locationSelect.value.trim()  // 변경
+            val location = locationSelect.value.trim()
 
             if (location.isEmpty()) {
-                window.alert("지역을 선택해주세요!")
+                window.alert(UiConstants.SELECT_LOCATION_ALERT)
                 return@addEventListener
             }
 
             scope.launch {
                 try {
-                    resultDiv.innerHTML = "<p>날씨 정보를 불러오는 중...</p>"
+                    resultDiv.innerHTML = "<p>${UiConstants.LOADING_MESSAGE}</p>"
                     resultDiv.style.display = "block"
 
                     val weatherData = weatherApi.fetchWeather(location)
-
-                    // 평균기온 기준으로만 추천
                     val recommendation = recommender.getRecommendation(weatherData.avgTemp)
 
                     resultDiv.innerHTML = """
-            <h3>${weatherData.location} 날씨 정보</h3>
-            
-            <div class="temp-info">
-                <strong>최고 기온:</strong> ${weatherData.maxTemp}°C
-            </div>
-            
-            <div class="temp-info">
-                <strong>최저 기온:</strong> ${weatherData.minTemp}°C
-            </div>
-            
-            <div class="temp-info">
-                <strong>평균 기온:</strong> ${weatherData.avgTemp.format(1)}°C
-            </div>
-            
-            <div class="recommendation">
-                <strong>추천 옷차림:</strong><br>
-                ${recommendation}
-            </div>
-        """.trimIndent()
+                        <h3>${weatherData.location} 날씨 정보</h3>
+                        
+                        <div class="temp-info">
+                            <strong>최고 기온:</strong> ${weatherData.maxTemp}°C
+                        </div>
+                        
+                        <div class="temp-info">
+                            <strong>최저 기온:</strong> ${weatherData.minTemp}°C
+                        </div>
+                        
+                        <div class="temp-info">
+                            <strong>평균 기온:</strong> ${weatherData.avgTemp.format(1)}°C
+                        </div>
+                        
+                        <div class="recommendation">
+                            <strong>추천 옷차림:</strong><br>
+                            ${recommendation}
+                        </div>
+                    """.trimIndent()
 
                 } catch (e: Exception) {
-                    resultDiv.innerHTML = "<p style='color: red;'>오류가 발생했습니다: ${e.message}</p>"
+                    resultDiv.innerHTML = "<p style='color: red;'>${UiConstants.ERROR_MESSAGE_PREFIX}${e.message}</p>"
                     console.error("Error:", e)
                 }
             }
