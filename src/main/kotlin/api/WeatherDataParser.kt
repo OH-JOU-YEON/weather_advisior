@@ -8,11 +8,11 @@ object WeatherDataParser {
         val response = jsonData.asDynamic().response
         val items = response.body.items.item as Array<Json>
 
-        var maxTemp = 15.0
-        var minTemp = 5.0
-        var currentTemp = 10.0
+        var maxTemp: Double? = null
+        var minTemp: Double? = null
+        val temperatures = mutableListOf<Double>()
 
-        // TMX: 최고기온, TMN: 최저기온, T1H: 기온
+        // TMX: 최고기온, TMN: 최저기온, TMP: 기온
         for (item in items) {
             val category = item.asDynamic().category as String
             val fcstValue = (item.asDynamic().fcstValue as String).toDoubleOrNull() ?: continue
@@ -20,20 +20,18 @@ object WeatherDataParser {
             when (category) {
                 "TMX" -> maxTemp = fcstValue
                 "TMN" -> minTemp = fcstValue
-                "T1H" -> currentTemp = fcstValue
+                "TMP" -> temperatures.add(fcstValue)
             }
         }
 
-        // TMX, TMN이 없는 경우 현재 기온 기준으로 추정
-        if (maxTemp == 15.0 && minTemp == 5.0) {
-            maxTemp = currentTemp + 3
-            minTemp = currentTemp - 3
-        }
+        // TMX, TMN이 없는 경우 TMP의 최대/최소값 사용
+        val finalMaxTemp = maxTemp ?: temperatures.maxOrNull() ?: 15.0
+        val finalMinTemp = minTemp ?: temperatures.minOrNull() ?: 5.0
 
         return WeatherData(
             location = location,
-            maxTemp = maxTemp,
-            minTemp = minTemp
+            maxTemp = finalMaxTemp,
+            minTemp = finalMinTemp
         )
     }
 }
